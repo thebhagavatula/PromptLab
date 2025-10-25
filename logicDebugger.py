@@ -6,7 +6,7 @@ import time
 from dotenv import load_dotenv
 
 load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key=os.getenv("OPENAI_API_KEY")
 
 BASE_PROMPT = """Question: {question}
 Answer the question step-by-step, show your reasoning and conclusion."""
@@ -18,10 +18,10 @@ SELF_CRITIQUE_PROMPT = """You produced this answer:
 Now, check your answer step-by-step. Identify any incorrect facts, contradictions, or unjustified points. For each issue found, Explain why is is problematic and propose a clarified/corrected answer. If the original answer is more apt, say "No issues found" and restate the concise final answer.
 """
 
-def callModel(prompt, model="gpt-4o-mini", temperature=0.3, max_tokens=600):
-    resp = openai.Completion.create(
+def callModel(prompt, model="gpt-5-mini", temperature=0.3, max_tokens=600):
+    resp = openai.ChatCompletion.create(
         model=model,
-        messages=[{"role":"user", "content": prompt}],
+        messages=[{"role": "user", "content": prompt}],
         temperature=temperature,
         max_tokens=max_tokens
     )
@@ -30,7 +30,7 @@ def callModel(prompt, model="gpt-4o-mini", temperature=0.3, max_tokens=600):
 def similarity (a, b):
     return SequenceMatcher(None, a, b).ratio()
 
-def runDebug(question, model="gpt-4o-mini"):
+def runDebug(question, model="gpt-5-mini"):
     base = BASE_PROMPT.format(question=question)
     print(">>> Asking base question...\n")
     ans = callModel(base, model=model, temperature=0.3)
@@ -58,6 +58,6 @@ def runDebug(question, model="gpt-4o-mini"):
     if __name__ == "__main__":
         parser = argparse.ArgumentParser()
         parser.add_argument("--q", required=True, help="Question to ask the model (wrap in quotes)")
-        parser.add_argument("--model", default="gpt-4o-mini", help="Model to call")
+        parser.add_argument("--model", default="gpt-5-mini", help="Model to call")
         args = parser.parse_args()
         runDebug(args.q, args.model)
