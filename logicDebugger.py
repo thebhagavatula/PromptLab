@@ -24,7 +24,7 @@ For each issue found, explain why it is problematic and propose a corrected/clar
 If the original answer is correct, say "No issues found" and restate the concise final answer.
 """
 
-def call_model(prompt, model="gpt-5-mini", temperature=1, max_tokens=600):
+def call_model(prompt, model="gpt-4o-mini", temperature=1, max_tokens=600):
     try:
         resp = client.chat.completions.create(
             model=model,
@@ -41,7 +41,7 @@ def call_model(prompt, model="gpt-5-mini", temperature=1, max_tokens=600):
 def similarity(a, b):
     return SequenceMatcher(None, a, b).ratio()
 
-def run_debug(question, model="gpt-5-mini"):
+def run_debug(question, model="gpt-4o-mini"):
     base = BASE_PROMPT.format(question=question)
     print(">>> Asking base question...\n")
     ans = call_model(base, model=model, temperature=1)
@@ -73,6 +73,6 @@ def run_debug(question, model="gpt-5-mini"):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--q", required=True, help="Question to ask the model (wrap in quotes)")
-    parser.add_argument("--model", default="gpt-5-mini", help="model id to call")
+    parser.add_argument("--model", default="gpt-4o-mini", help="model id to call")
     args = parser.parse_args()
     run_debug(args.q, model=args.model)
