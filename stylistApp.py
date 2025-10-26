@@ -3,9 +3,10 @@ import os
 import openai
 import gradio as gr
 from dotenv import load_dotenv
+from openai import OpenAI
 
 load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 TONE_PROMPTS = {
     "formal": "Rewrite the following prompt in a formal, professional tone while keeping the intent identical:",
@@ -17,13 +18,13 @@ TONE_PROMPTS = {
 def transform_prompt(user_input, tone):
     modifier = TONE_PROMPTS.get(tone, TONE_PROMPTS["formal"])
     full_prompt = f"{modifier}\n\n\"{user_input}\"\n\nProduce only the rewritten prompt."
-    resp = openai.ChatCompletion.create(
-        model="gpt-5-mini",
+    resp = openai.chat.completions.create(
+        model="gpt-4o-mini",
         messages=[{"role":"user","content":full_prompt}],
-        temperature=0.4,
+        temperature=1,
         max_tokens=200
     )
-    return resp["choices"][0]["message"]["content"].strip()
+    return resp.choices[0].message.content.strip()
 
 def generate_variations(user_input):
     results = {}
