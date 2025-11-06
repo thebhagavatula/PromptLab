@@ -2,8 +2,7 @@
 
 ## Overview
 
-**PromptLab** is a personal AI experimentation repository containing multiple projects focused on prompt engineering, AI-assisted debugging, and AI-driven applications.  
-It serves as both a **learning playground** and a **portfolio showcase** for AI, LLMs, and prompt engineering skills.
+**PromptLab** is a personal AI experimentation repository containing multiple projects focused on prompt engineering, AI-assisted debugging, and AI-driven applications.
 
 ### Projects Included
 
